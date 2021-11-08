@@ -17,6 +17,8 @@ metroInPassengers = 0;
 metroOutPassengers = 0;
 incomingMetroIndex = 0;
 metroAvailable = False;
+metroCarsLeavingWithPassengersIndex = -1;
+metroCarsLeavingWithPassengers = [];
 #endregion Properties
 
 def ReadInputFile():
@@ -67,35 +69,6 @@ def ReadInputFile():
         print("Something went wrong while trying to read input file!");
         print(exc);
         return False;
-
-def PrintStuffToConsole():
-    print("Időegységek száma: " + str(boardingTickCount));
-    print("Mozgólépcső hossza: " + str(escalatorLength));
-    print("Váróterem kapacitása: " + str(lobbyCapacity));
-    print("Metrók követési távolsága: " + str(metroFrequency));
-    print("Érkező utasok száma: " + str(boardingPassengerCount));
-    print();
-    print("Felszálló utasok érkezései: ");
-    for i in boardingPassengers:
-        print("\tTick: " + str(i.Tick) + " \tCount: " + str(i.Count));
-    print();
-    print("Érkező utasok számai: ");
-    print(landing_passengers);
-
-def PrintTickInfo(currentTick):
-    os.system('cls');
-    
-    print(str(waitingBoardingPassengers) + "\t" + str(leftPassangers));
-    print("--\t--");
-    for i in range(0, len(passengersOnDownwardEscalator)):
-        if(currentTick == 9):
-            print();
-        print(str(passengersOnDownwardEscalator[i]) + "\t" + str(passengersOnUpwardEscalator[-i-1]));
-    
-    print("    " + str(passengersInLobby));
-    print("----------");
-    print(str(metroOutPassengers) + "\t" + str(metroInPassengers));
-    print();
 
 def FillEmptyEscalatorSpaces():
     global passengersOnDownwardEscalator;
@@ -182,6 +155,10 @@ def UpdatePassengerCountOnLocations():
     metroOutPassengers = len(Passenger.GetPassengersByLocation("metroOut"));
 
 def HandleMoving():
+    global metroCarsLeavingWithPassengers;
+    global metroCarsLeavingWithPassengersIndex;
+    startedBoarding = False;
+    
     if(len(passengers) > 0):
         for id, passenger in passengers:
             if(passenger.position == "metroOut"):
@@ -196,6 +173,11 @@ def HandleMoving():
                     if(passengersOnUpwardEscalator[0] < 2):
                         passenger.Move();
                 elif(passenger.type.startswith("boarding") and metroAvailable):
+                    if(startedBoarding == False):
+                        metroCarsLeavingWithPassengers.append(0);
+                        metroCarsLeavingWithPassengersIndex += 1;
+                        startedBoarding = True;
+                    metroCarsLeavingWithPassengers[metroCarsLeavingWithPassengersIndex] += 1;
                     passenger.Move();
             elif(passenger.position.startswith("metroIn")):
                 passenger.Move();
@@ -208,17 +190,32 @@ def StartSimulation():
     FillEmptyEscalatorSpaces();
     
     while(currentTick <= boardingTickCount + escalatorLength + metroFrequency or closeStation):
+        HandleNewLandingPassengers(currentTick);
         HandleMoving();
         HandleNewBoardingPassengers(currentTick);
-        HandleNewLandingPassengers(currentTick);
-        PrintTickInfo(currentTick);
         currentTick += 1;
-        time.sleep(1);
-        
+    print();
+
+def SaveResults():
+    try:
+        file = open(outputFilePath, "w");
+        file.write(str(len(metroCarsLeavingWithPassengers)) + "\n");
+        print(str(len(metroCarsLeavingWithPassengers)));
+        secondRow = "";
+        for i in metroCarsLeavingWithPassengers:
+            secondRow += str(i) + " ";
+        file.write(secondRow);
+        print(secondRow);
+        file.close();
+        return;
+    except Exception as exc:
+        print("Something went wrong while trying to write ouput to file!");
+        print(exc);
+        return False;
 
 #region Main
 os.system('cls');
 if(ReadInputFile()):
-    # PrintStuffToConsole();
     StartSimulation();
+    SaveResults();
 #endregion Main
