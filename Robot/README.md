@@ -11,9 +11,8 @@ Ha több tárgyat szállít, akkor azokat tetszőleges sorrendben adhatja le a r
 Egy lépése *egy időegységet* igényel. Miután leadta az egy menetben szállított tárgyakat, vissza kell térnie a kiindulási helyére, a **(0,0)** mezőre.  
 
 Készíts programot ([robot.py](https://github.com/sens1tiv/Nemes-Tihamer-Feladatok/blob/master/Robot/robot.py)), amely kiszámítja, hogy legkevesebb mennyi idő alatt tudja a robot elszállítani az összes tárgyat, és meg is ad egy szállítási ütemezést!  
-A [robot.be](https://github.com/sens1tiv/Nemes-Tihamer-Feladatok/blob/master/Robot/robot.be) szöveges állomány első sorában a tárgyak **N** *(≤N≤10000)* száma van.  
-A következő **N** sor mindegyikében két pozitív egész szám van; **X és Y** *(1≤X,Y≤1000)* egy szóközzel elválasztva, egy tárgy rendeltetési helyének koordinátái. Ugyanarra a helyre több tárgy
-is érkezhet.  
+A [robot.be](https://github.com/sens1tiv/Nemes-Tihamer-Feladatok/blob/master/Robot/robot.be) szöveges állomány első sorában a tárgyak **N** *(1≤N≤10000)* száma van.  
+A következő **N** sor mindegyikében két pozitív egész szám van; **X és Y** *(1≤X,Y≤1000)* egy szóközzel elválasztva, egy tárgy rendeltetési helyének koordinátái. Ugyanarra a helyre több tárgy is érkezhet.  
 A [robot.ki](https://github.com/sens1tiv/Nemes-Tihamer-Feladatok/blob/master/Robot/robot.ki) szöveges állomány első sorába azt a legkisebb **M** számot kell írni, amely alatt a robot az összes tárgyat el tudja szállítani a rendeltetési helyére.  
 A második sorba egy számsorozatot kell írni *(egy-egy szóközzel elválasztva)*, amely megadja, hogy a robot egy-egy menetben hány tárgyat szállít. Tehát a számsorozat minden eleme **1**,**2**, vagy **3** lehet.
 
