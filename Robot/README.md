@@ -1,4 +1,4 @@
-# 2007/2008 1. feladat: Robot  
+# [2007/2008](https://www.oktatas.hu/pub_bin/dload/kozoktatas/tanulmanyi_versenyek/oktv/oktv_2007_2008/oktv0708_info2_d_flut.pdf) 1. feladat: Robot  
 
 Egy gyárban a munkagépek négyzetrácsos elrendezésben vannak. A futószalagon érkező tárgyakat egy robotnak kell elszállítania a rendeltetési helyére.  
 A robot a **(0,0)** mezőről indul, a tárgyakat érkezési sorrendjükben veheti le a futószalagról és egyszerre legfeljebb **3** tárgyat szállíthat.  

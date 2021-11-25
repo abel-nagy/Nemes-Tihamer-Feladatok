@@ -1,7 +1,7 @@
 import os;
 from Package import Package;
 from Machine import Machine;
-from RobotEnums import Direction, MachineState, PackageState;
+from RobotEnums import MachineState, PackageState;
 
 #region Properties
 FolderPath = os.path.dirname(os.path.normpath(__file__));
@@ -55,7 +55,6 @@ def Calculate():
     global PackagesLeftToDeliverCount;
     
     while(PackagesLeftToDeliverCount != 0):
-        #print(machine.ToString());
         if(machine.State == MachineState.AT_HOME):
             machine.PickupPackage(Packages[nextPackageInQueueId]);
             nextPackageInQueueId += 1;
@@ -74,7 +73,11 @@ def Calculate():
             machine.ChooseDestination();
         elif(machine.State == MachineState.MOVING):
             machine.HandleMovement();
-        
+    
+    machine.ChooseDestination();
+    while(machine.State == MachineState.MOVING):
+        machine.HandleMovement();
+    
     print(len(machine.MoveHistory));
 
 def WriteFile():

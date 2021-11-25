@@ -1,10 +1,8 @@
-import math;
-
 class Vector:
     def __init__(self, x, y):
         self.X = int(x);
         self.Y = int(y);
-        self.Length = self.X + self.Y;
+        self.Length = abs(self.X) + abs(self.Y);
     
     def ToString(self):
         return "(" + str(self.X) + "," + str(self.Y) + ")";
