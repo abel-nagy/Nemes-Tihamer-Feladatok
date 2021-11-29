@@ -30,7 +30,7 @@ def CheckFileInput(row):
 def ReadFile():
     file = open(inputFilePath);
     
-    firstRow = file.readline().split();6
+    firstRow = file.readline().split();
     
     global birdCount;
     global areaSize;
