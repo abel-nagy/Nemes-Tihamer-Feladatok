@@ -11,6 +11,7 @@ OutputFilePath = os.path.join(FolderPath, "robot.ki");
 PackageCount = 0;
 Packages = [];
 PackagesLeftToDeliverCount = 0;
+PackageCountDeliveredInOneRound = [];
 #endregion Properties
 
 #region Functions
@@ -53,6 +54,7 @@ def Calculate():
     machine = Machine();
     nextPackageInQueueId = 0;
     global PackagesLeftToDeliverCount;
+    global PackageCountDeliveredInOneRound;
     
     while(PackagesLeftToDeliverCount != 0):
         if(machine.State == MachineState.AT_HOME):
@@ -70,6 +72,8 @@ def Calculate():
             for package in Packages:
                 if(package.State != PackageState.Delivered):
                     PackagesLeftToDeliverCount += 1;
+            if(machine.State == MachineState.INVENTORY_FULL):
+                PackageCountDeliveredInOneRound.append(len(machine.Packages));
             machine.ChooseDestination();
         elif(machine.State == MachineState.MOVING):
             machine.HandleMovement();
@@ -82,8 +86,11 @@ def Calculate():
 
 def WriteFile():
     file = open(OutputFilePath, "w");
-    for pos in machine.MoveHistory:
-        file.write(str(pos.X) + " " + str(pos.Y) + "\n");
+    
+    file.write(str(len(machine.MoveHistory)) + "\n");
+    for i in PackageCountDeliveredInOneRound:
+        file.write(str(i) + " ");
+        
     file.close();
 
 #endregion Functions
