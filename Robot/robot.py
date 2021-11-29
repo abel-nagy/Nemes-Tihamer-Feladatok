@@ -72,7 +72,7 @@ def Calculate():
             for package in Packages:
                 if(package.State != PackageState.Delivered):
                     PackagesLeftToDeliverCount += 1;
-            if(machine.State == MachineState.INVENTORY_FULL):
+            if(machine.State == MachineState.INVENTORY_FULL or nextPackageInQueueId + 1 >= PackageCount):
                 PackageCountDeliveredInOneRound.append(len(machine.Packages));
             machine.ChooseDestination();
         elif(machine.State == MachineState.MOVING):
